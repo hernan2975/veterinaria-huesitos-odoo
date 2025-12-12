@@ -1,0 +1,60 @@
+veterinaria-huesitos-odoo/
+├── .gitignore
+├── LICENSE
+├── README.md
+│
+├── veterinaria_huesitos/
+│   ├── __init__.py
+│   ├── __manifest__.py
+│   ├── models/
+│   │   ├── __init__.py
+│   │   ├── paciente.py
+│   │   ├── cliente.py
+│   │   ├── historial_clinico.py
+│   │   ├── medicamento.py
+│   │   ├── vacuna.py
+│   │   └── ficha_senasa.py
+│   ├── views/
+│   │   ├── paciente_views.xml
+│   │   ├── cliente_views.xml
+│   │   ├── historial_clinico_views.xml
+│   │   ├── medicamento_views.xml
+│   │   └── menu.xml
+│   ├── security/
+│   │   ├── ir.model.access.csv
+│   │   └── security.xml
+│   ├── data/
+│   │   ├── medicamentos_data.xml
+│   │   └── vacunas_data.xml
+│   └── report/
+│       ├── ficha_clinica_senasa.xml
+│       └── report_templates.xml
+│
+├── veterinaria_huesitos_stock/
+│   ├── __init__.py
+│   ├── __manifest__.py
+│   ├── models/
+│   │   ├── __init__.py
+│   │   └── stock_picking.py
+│   └── views/
+│       └── stock_views.xml
+│
+├── veterinaria_huesitos_reports/
+│   ├── __init__.py
+│   ├── __manifest__.py
+│   ├── report/
+│       ├── ficha_clinica_report.py
+│       ├── vacunacion_report.py
+│       └── senasa_report.py
+│   └── views/
+│       └── report_actions.xml
+│
+├── deployment/
+│   ├── docker-compose.yml
+│   ├── odoo.conf
+│   └── backup_script.sh
+│
+└── docs/
+    ├── guia_implantacion.md
+    ├── protocolo_senasa.md
+    └── customizacion_lp.md
