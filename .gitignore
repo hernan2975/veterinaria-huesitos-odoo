@@ -1,0 +1,19 @@
+# Odoo generated
+*.pyc
+__pycache__/
+*.log
+*.pid
+*.pickle
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Data
+filestore/
+session/
+
+# Docker
+.dockerenv
