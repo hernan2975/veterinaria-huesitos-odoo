@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vista formulario cliente -->
+    <record id="view_cliente_form" model="ir.ui.view">
+        <field name="name">veterinaria_huesitos.cliente.form</field>
+        <field name="model">veterinaria_huesitos.cliente</field>
+        <field name="arch" type="xml">
+            <form string="Cliente">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="nombre" placeholder="Nombre"/>
+                            <field name="apellido" placeholder="Apellido"/>
+                        </h1>
+                    </div>
+                    
+                    <group>
+                        <group>
+                            <field name="telefono"/>
+                            <field name="email"/>
+                            <field name="dni"/>
+                            <field name="cliente_desde"/>
+                        </group>
+                        <group>
+                            <field name="direccion"/>
+                            <field name="localidad"/>
+                            <field name="provincia"/>
+                            <field name="cp"/>
+                        </group>
+                    </group>
+                    
+                    <notebook>
+                        <page string="Pacientes" name="pacientes">
+                            <field name="paciente_ids">
+                                <tree create="false" delete="false">
+                                    <field name="name"/>
+                                    <field name="especie"/>
+                                    <field name="raza"/>
+                                    <field name="edad"/>
+                                    <field name="peso_kg"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Historial" name="historial">
+                            <field name="historial_ids">
+                                <tree create="false" delete="false">
+                                    <field name="fecha_atencion"/>
+                                    <field name="paciente_id"/>
+                                    <field name="motivo_consulta"/>
+                                    <field name="state"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vista lista cliente -->
+    <record id="view_cliente_tree" model="ir.ui.view">
+        <field name="name">veterinaria_huesitos.cliente.tree</field>
+        <field name="model">veterinaria_huesitos.cliente</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="telefono"/>
+                <field name="localidad"/>
+                <field name="provincia"/>
+                <field name="cliente_desde"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Vista búsqueda cliente -->
+    <record id="view_cliente_search" model="ir.ui.view">
+        <field name="name">veterinaria_huesitos.cliente.search</field>
+        <field name="model">veterinaria_huesitos.cliente</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Nombre" filter_domain="['|', ('nombre','ilike',self), ('apellido','ilike',self)]"/>
+                <field name="telefono"/>
+                <field name="localidad"/>
+                <filter name="guatrache" string="Guatrache" domain="[('localidad','=','Guatrache')]"/>
+                <filter name="lonquimay" string="Lonquimay" domain="[('localidad','=','Lonquimay')]"/>
+                <separator/>
+                <group expand="0" string="Agrupar por...">
+                    <filter name="group_localidad" string="Localidad" context="{'group_by':'localidad'}"/>
+                    <filter name="group_provincia" string="Provincia" context="{'group_by':'provincia'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Acción ventana cliente -->
+    <record id="action_cliente" model="ir.actions.act_window">
+        <field name="name">Clientes</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">veterinaria_huesitos.cliente</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_cliente_search"/>
+    </record>
+</odoo>
