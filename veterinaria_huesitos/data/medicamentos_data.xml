@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data noupdate="1">
-        <!-- Medicamentos comunes en veterinarias rurales -->
-        <record id="med_ivermectina" model="veterinaria_huesitos.medicamento">
-            <field name="name">Ivermectina 1%</field>
+        <!-- Medicamentos esenciales para veterinaria rural pampeana -->
+        
+        <!-- Antiparasitarios -->
+        <record id="med_ivermectina_1pct" model="veterinaria_huesitos.medicamento">
+            <field name="name">Ivermectina 1% Inyectable</field>
             <field name="principio_activo">Ivermectina</field>
             <field name="laboratorio">Laboratorio Veterinario Argentino</field>
             <field name="presentacion">inyeccion</field>
@@ -11,17 +13,70 @@
             <field name="registro_senasa">SENASA-12345-67890</field>
             <field name="tipo">antiparasitario</field>
             <field name="requiere_receta" eval="False"/>
+            <field name="indicaciones">1 ml por cada 50 kg de peso vivo. Vía subcutánea.</field>
         </record>
         
-        <record id="med_amoxidal" model="veterinaria_huesitos.medicamento">
+        <record id="med_abamectina" model="veterinaria_huesitos.medicamento">
+            <field name="name">Abamectina 1.85%</field>
+            <field name="principio_activo">Abamectina</field>
+            <field name="laboratorio">FarmaVet S.A.</field>
+            <field name="presentacion">inyeccion</field>
+            <field name="concentracion">18.5 mg/ml</field>
+            <field name="registro_senasa">SENASA-23456-78901</field>
+            <field name="tipo">antiparasitario</field>
+            <field name="requiere_receta" eval="False"/>
+            <field name="indicaciones">1 ml por cada 50 kg. Vía subcutánea.</field>
+        </record>
+        
+        <!-- Antibióticos -->
+        <record id="med_amoxidal_15pct" model="veterinaria_huesitos.medicamento">
             <field name="name">Amoxidal 15%</field>
             <field name="principio_activo">Amoxicilina</field>
             <field name="laboratorio">Laboratorio Veterinario Argentino</field>
             <field name="presentacion">inyeccion</field>
             <field name="concentracion">150 mg/ml</field>
-            <field name="registro_senasa">SENASA-23456-78901</field>
+            <field name="registro_senasa">SENASA-34567-89012</field>
             <field name="tipo">antibiotico</field>
             <field name="requiere_receta" eval="True"/>
+            <field name="indicaciones">1 ml por cada 15 kg cada 48 hs. Vía intramuscular.</field>
+        </record>
+        
+        <record id="med_enrofloxacino" model="veterinaria_huesitos.medicamento">
+            <field name="name">Enrofloxacino 5%</field>
+            <field name="principio_activo">Enrofloxacino</field>
+            <field name="laboratorio">FarmaVet S.A.</field>
+            <field name="presentacion">inyeccion</field>
+            <field name="concentracion">50 mg/ml</field>
+            <field name="registro_senasa">SENASA-45678-90123</field>
+            <field name="tipo">antibiotico</field>
+            <field name="requiere_receta" eval="True"/>
+            <field name="indicaciones">1 ml por cada 10 kg cada 24 hs. Vía subcutánea.</field>
+        </record>
+        
+        <!-- Analgésicos/Antiinflamatorios -->
+        <record id="med_meloxivet" model="veterinaria_huesitos.medicamento">
+            <field name="name">Meloxivet</field>
+            <field name="principio_activo">Meloxicam</field>
+            <field name="laboratorio">Laboratorio Veterinario Argentino</field>
+            <field name="presentacion">tabletas</field>
+            <field name="concentracion">7.5 mg</field>
+            <field name="registro_senasa">SENASA-56789-01234</field>
+            <field name="tipo">analgesico</field>
+            <field name="requiere_receta" eval="True"/>
+            <field name="indicaciones">1 tableta por perro de 7.5 kg. Vía oral.</field>
+        </record>
+        
+        <!-- Otros -->
+        <record id="med_vitaminas" model="veterinaria_huesitos.medicamento">
+            <field name="name">Complejo Vitamínico B</field>
+            <field name="principio_activo">Complejo B</field>
+            <field name="laboratorio">FarmaVet S.A.</field>
+            <field name="presentacion">inyeccion</field>
+            <field name="concentracion">Complejo</field>
+            <field name="registro_senasa">SENASA-67890-12345</field>
+            <field name="tipo">otros</field>
+            <field name="requiere_receta" eval="False"/>
+            <field name="indicaciones">1 ml por cada 10 kg. Vía intramuscular.</field>
         </record>
     </data>
 </odoo>
