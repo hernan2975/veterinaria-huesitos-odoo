@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Estilos para reportes -->
+    <template id="veterinaria_huesitos_report_layout">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <div class="row">
+                    <div class="col-3">
+                        <img t-att-src="'/veterinaria_huesitos/static/description/icon.png'" 
+                             style="max-height: 60px;"/>
+                    </div>
+                    <div class="col-9 text-right">
+                        <h2>Veterinaria Huesitos</h2>
+                        <p class="text-muted">
+                            Guatrache, La Pampa<br/>
+                            Tel: +54 2954 123456<br/>
+                            huesitos@veterinaria.com.ar
+                        </p>
+                    </div>
+                </div>
+                
+                <hr style="border-top: 2px solid #264653;"/>
+                
+                <t t-raw="0"/>
+            </div>
+        </t>
+    </template>
+
+    <!-- Estilos CSS para reportes -->
+    <template id="veterinaria_huesitos_report_styles" inherit_id="web.report_assets_common">
+        <xpath expr="." position="inside">
+            <style>
+                .veterinaria-header {
+                    background-color: #264653;
+                    color: white;
+                    padding: 10px;
+                    margin-bottom: 20px;
+                    border-radius: 5px;
+                }
+                .veterinaria-footer {
+                    margin-top: 30px;
+                    padding-top: 10px;
+                    border-top: 1px solid #ccc;
+                    font-size: 0.9em;
+                    color: #666;
+                }
+                .table-borderless td, .table-borderless th {
+                    border: none !important;
+                }
+                .senasa-barcode {
+                    text-align: center;
+                    margin: 10px 0;
+                }
+                .signature-line {
+                    margin-top: 30px;
+                    border-top: 1px solid #000;
+                    padding-top: 5px;
+                    text-align: center;
+                    font-weight: bold;
+                }
+            </style>
+        </xpath>
+    </template>
+</odoo>
