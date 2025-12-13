@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Vacunas esenciales para la región pampeana -->
+        
+        <!-- Vacunas caninas -->
+        <record id="vac_polivalente_canina" model="veterinaria_huesitos.vacuna">
+            <field name="name">Vacuna Polivalente Canina</field>
+            <field name="laboratorio">Laboratorio Veterinario Argentino</field>
+            <field name="enfermedades">Moquillo, Hepatitis, Parvovirus, Leptospirosis, Parainfluenza</field>
+            <field name="especie_destino">canino</field>
+            <field name="dosis_aplicacion">1 ml</field>
+            <field name="via_administracion">subcutanea</field>
+            <field name="intervalo_refuerzo">21</field>
+            <field name="edad_minima">45</field>
+            <field name="registro_senasa">SENASA-VAC-12345</field>
+            <field name="requiere_refrigeracion" eval="True"/>
+            <field name="temperatura_conservacion">2°C a 8°C</field>
+        </record>
+        
+        <record id="vac_antirrabica_canina" model="veterinaria_huesitos.vacuna">
+            <field name="name">Vacuna Antirrábica Canina</field>
+            <field name="laboratorio">Laboratorio Veterinario Argentino</field>
+            <field name="enfermedades">Rabia</field>
+            <field name="especie_destino">canino</field>
+            <field name="dosis_aplicacion">1 ml</field>
+            <field name="via_administracion">subcutanea</field>
+            <field name="intervalo_refuerzo">365</field>
+            <field name="edad_minima">90</field>
+            <field name="registro_senasa">SENASA-VAC-23456</field>
+            <field name="requiere_refrigeracion" eval="True"/>
+            <field name="temperatura_conservacion">2°C a 8°C</field>
+        </record>
+        
+        <!-- Vacunas felinas -->
+        <record id="vac_polivalente_felina" model="veterinaria_huesitos.vacuna">
+            <field name="name">Vacuna Polivalente Felina</field>
+            <field name="laboratorio">FarmaVet S.A.</field>
+            <field name="enfermedades">Rinotraqueítis, Calicivirosis, Panleucopenia</field>
+            <field name="especie_destino">felino</field>
+            <field name="dosis_aplicacion">1 ml</field>
+            <field name="via_administracion">subcutanea</field>
+            <field name="intervalo_refuerzo">21</field>
+            <field name="edad_minima">60</field>
+            <field name="registro_senasa">SENASA-VAC-34567</field>
+            <field name="requiere_refrigeracion" eval="True"/>
+            <field name="temperatura_conservacion">2°C a 8°C</field>
+        </record>
+        
+        <!-- Vacunas para rumiantes (zona rural) -->
+        <record id="vac_aftosa" model="veterinaria_huesitos.vacuna">
+            <field name="name">Vacuna Aftosa Tipo O</field>
+            <field name="laboratorio">Laboratorio Nacional de Producción de Vacunas</field>
+            <field name="enfermedades">Fiebre Aftosa</field>
+            <field name="especie_destino">bovino</field>
+            <field name="dosis_aplicacion">2 ml</field>
+            <field name="via_administracion">subcutanea</field>
+            <field name="intervalo_refuerzo">180</field>
+            <field name="edad_minima">90</field>
+            <field name="registro_senasa">SENASA-VAC-45678</field>
+            <field name="requiere_refrigeracion" eval="True"/>
+            <field name="temperatura_conservacion">2°C a 8°C</field>
+        </record>
+        
+        <record id="vac_brucelosis" model="veterinaria_huesitos.vacuna">
+            <field name="name">Vacuna RB51 Antibrucélica</field>
+            <field name="laboratorio">Laboratorio Nacional de Producción de Vacunas</field>
+            <field name="enfermedades">Brucelosis</field>
+            <field name="especie_destino">bovino</field>
+            <field name="dosis_aplicacion">2 ml</field>
+            <field name="via_administracion">subcutanea</field>
+            <field name="intervalo_refuerzo">0</field>
+            <field name="edad_minima">90</field>
+            <field name="registro_senasa">SENASA-VAC-56789</field>
+            <field name="requiere_refrigeracion" eval="True"/>
+            <field name="temperatura_conservacion">2°C a 8°C</field>
+        </record>
+        
+        <!-- Vacunas equinas -->
+        <record id="vac_equina_polivalente" model="veterinaria_huesitos.vacuna">
+            <field name="name">Vacuna Polivalente Equina</field>
+            <field name="laboratorio">FarmaVet S.A.</field>
+            <field name="enfermedades">Encefalomielitis, Influenza, Tétanos</field>
+            <field name="especie_destino">equino</field>
+            <field name="dosis_aplicacion">2 ml</field>
+            <field name="via_administracion">intramuscular</field>
+            <field name="intervalo_refuerzo">30</field>
+            <field name="edad_minima">120</field>
+            <field name="registro_senasa">SENASA-VAC-67890</field>
+            <field name="requiere_refrigeracion" eval="True"/>
+            <field name="temperatura_conservacion">2°C a 8°C</field>
+        </record>
+    </data>
+</odoo>
