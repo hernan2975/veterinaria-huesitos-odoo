@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vista formulario historial clínico -->
+    <record id="view_historial_clinico_form" model="ir.ui.view">
+        <field name="name">veterinaria_huesitos.historial_clinico.form</field>
+        <field name="model">veterinaria_huesitos.historial_clinico</field>
+        <field name="arch" type="xml">
+            <form string="Historial Clínico">
+                <header>
+                    <button name="action_confirmar" type="object" string="Confirmar" 
+                            class="oe_highlight" states="borrador"/>
+                    <button name="action_cancelar" type="object" string="Cancelar" 
+                            states="borrador"/>
+                    <field name="state" widget="statusbar" statusbar_visible="borrador,confirmado"/>
+                </header>
+                
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    
+                    <group>
+                        <group>
+                            <field name="paciente_id" required="1" 
+                                   options="{'no_create': True, 'no_open': True}"/>
+                            <field name="cliente_id" readonly="1"/>
+                            <field name="fecha_atencion" required="1"/>
+                            <field name="veterinario_id" readonly="1"/>
+                            <field name="matricula_veterinario" required="1"/>
+                        </group>
+                        <group>
+                            <field name="especie_paciente" string="Especie" readonly="1"/>
+                            <field name="raza_paciente" string="Raza" readonly="1"/>
+                            <field name="edad_paciente" string="Edad" readonly="1"/>
+                            <field name="peso_paciente" string="Peso (kg)" readonly="1"/>
+                        </group>
+                    </group>
+                    
+                    <group string="Consulta">
+                        <field name="motivo_consulta" required="1" placeholder="Motivo de la consulta..."/>
+                        <field name="diagnostico" placeholder="Diagnóstico..."/>
+                    </group>
+                    
+                    <group string="Tratamiento">
+                        <field name="medicamentos_ids" widget="many2many_tags" 
+                               options="{'no_create': True}"/>
+                        <field name="dosis_medicamentos" placeholder="Dosis y forma de administración..."/>
+                    </group>
+                    
+                    <group>
+                        <group>
+                            <field name="pronostico"/>
+                            <field name="requiere_seguimiento"/>
+                        </group>
+                        <group>
+                            <field name="proxima_consulta" attrs="{'invisible': [('requiere_seguimiento','=',False)]}"/>
+                        </group>
+                    </group>
+                    
+                    <field name="observaciones" placeholder="Observaciones adicionales..."/>
+                </sheet>
+                
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vista lista historial clínico -->
+    <record id="view_historial_clinico_tree" model="ir.ui.view">
+        <field name="name">veterinaria_huesitos.historial_clinico.tree</field>
+        <field name="model">veterinaria_huesitos.historial_clinico</field>
+        <field name="arch" type="xml">
+            <tree decoration-info="state=='borrador'" 
+                  decoration-success="state=='confirmado'"
+                  decoration-muted="state=='cancelado'">
+                <field name="name"/>
+                <field name="fecha_atencion"/>
+                <field name="paciente_id"/>
+                <field name="cliente_id"/>
+                <field name="motivo_consulta"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Vista búsqueda historial clínico -->
+    <record id="view_historial_clinico_search" model="ir.ui.view">
+        <field name="name">veterinaria_huesitos.historial_clinico.search</field>
+        <field name="model">veterinaria_huesitos.historial_clinico</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Código"/>
+                <field name="paciente_id"/>
+                <field name="cliente_id"/>
+                <field name="motivo_consulta"/>
+                <filter name="hoy" string="Hoy" domain="[('fecha_atencion','&gt;=',time.strftime('%%Y-%%m-%%d')),('fecha_atencion','&lt;=',time.strftime('%%Y-%%m-%%d'))]"/>
+                <filter name="semana" string="Esta Semana" domain="[('fecha_atencion','&gt;=',(context_today()-datetime.timedelta(days=context_today().weekday())).strftime('%%Y-%%m-%%d'))]"/>
+                <separator/>
+                <filter name="borrador" string="Borradores" domain="[('state','=','borrador')]"/>
+                <filter name="confirmado" string="Confirmados" domain="[('state','=','confirmado')]"/>
+                <group expand="0" string="Agrupar por...">
+                    <filter name="group_paciente" string="Paciente" context="{'group_by':'paciente_id'}"/>
+                    <filter name="group_cliente" string="Cliente" context="{'group_by':'cliente_id'}"/>
+                    <filter name="group_state" string="Estado" context="{'group_by':'state'}"/>
+                    <filter name="group_date" string="Fecha" context="{'group_by':'fecha_atencion:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Acción ventana historial clínico -->
+    <record id="action_historial_clinico" model="ir.actions.act_window">
+        <field name="name">Historial Clínico</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">veterinaria_huesitos.historial_clinico</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_historial_clinico_search"/>
+        <field name="context">{'default_matricula_veterinario': 'MP 12345'}</field>
+    </record>
+
+    <!-- Acción para nuevo historial desde paciente -->
+    <record id="action_historial_clinico_new" model="ir.actions.act_window">
+        <field name="name">Nuevo Historial</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">veterinaria_huesitos.historial_clinico</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="context">{
+            'default_paciente_id': active_id,
+            'default_cliente_id': active_id and active_id.cliente_id.id,
+            'default_matricula_veterinario': 'MP 12345'
+        }</field>
+    </record>
+</odoo>
