@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Acción para reporte de ficha clínica -->
+    <record id="action_report_ficha_clinica_wizard" model="ir.actions.act_window">
+        <field name="name">Ficha Clínica SENASA</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">veterinaria_huesitos.historial_clinico</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('state','=','confirmado')]</field>
+        <field name="context">{'report_action': 'ficha_clinica'}</field>
+    </record>
+
+    <!-- Acción para reporte de vacunación -->
+    <record id="action_report_vacunacion_wizard" model="ir.actions.act_window">
+        <field name="name">Vacunación</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">veterinaria_huesitos.historial_clinico</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('state','=','confirmado')]</field>
+        <field name="context">{'report_action': 'vacunacion'}</field>
+    </record>
+
+    <!-- Acción para reporte SENASA mensual -->
+    <record id="action_report_senasa_wizard" model="ir.actions.act_window">
+        <field name="name">Reporte Mensual SENASA</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">veterinaria_huesitos.historial_clinico</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('state','=','confirmado')]</field>
+        <field name="context">{'report_action': 'senasa'}</field>
+    </record>
+
+    <!-- Menú para reportes -->
+    <menuitem id="menu_reportes"
+              name="Reportes"
+              parent="veterinaria_huesitos.menu_veterinaria_root"
+              sequence="50"/>
+
+    <menuitem id="menu_reportes_ficha"
+              name="Ficha Clínica"
+              parent="menu_reportes"
+              action="action_report_ficha_clinica_wizard"
+              sequence="10"/>
+
+    <menuitem id="menu_reportes_vacunacion"
+              name="Vacunación"
+              parent="menu_reportes"
+              action="action_report_vacunacion_wizard"
+              sequence="20"/>
+
+    <menuitem id="menu_reportes_senasa"
+              name="Reporte SENASA"
+              parent="menu_reportes"
+              action="action_report_senasa_wizard"
+              sequence="30"/>
+
+    <!-- Vista formulario especial para reportes -->
+    <record id="view_report_wizard_form" model="ir.ui.view">
+        <field name="name">veterinaria_huesitos.report.wizard.form</field>
+        <field name="model">veterinaria_huesitos.historial_clinico</field>
+        <field name="arch" type="xml">
+            <form string="Generar Reporte">
+                <group>
+                    <group>
+                        <field name="fecha_desde" default="context_today().replace(day=1)"/>
+                        <field name="fecha_hasta" default="(context_today().replace(day=28) + timedelta(days=4)).replace(day=1) - timedelta(days=1)"/>
+                    </group>
+                </group>
+                
+                <footer>
+                    <button name="action_generar_reporte" type="object" 
+                            string="Generar Reporte" class="btn-primary"/>
+                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Método para generar reportes desde el wizard -->
+    <function model="ir.model" name="_patch_method">
+        <function name="eval" model="ir.actions.server">
+            <value>
+                env['veterinaria_huesitos.historial_clinico'].action_generar_reporte
+            </value>
+        </function>
+    </function>
+</odoo>
