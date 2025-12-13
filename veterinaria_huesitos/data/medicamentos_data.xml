@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Medicamentos comunes en veterinarias rurales -->
+        <record id="med_ivermectina" model="veterinaria_huesitos.medicamento">
+            <field name="name">Ivermectina 1%</field>
+            <field name="principio_activo">Ivermectina</field>
+            <field name="laboratorio">Laboratorio Veterinario Argentino</field>
+            <field name="presentacion">inyeccion</field>
+            <field name="concentracion">10 mg/ml</field>
+            <field name="registro_senasa">SENASA-12345-67890</field>
+            <field name="tipo">antiparasitario</field>
+            <field name="requiere_receta" eval="False"/>
+        </record>
+        
+        <record id="med_amoxidal" model="veterinaria_huesitos.medicamento">
+            <field name="name">Amoxidal 15%</field>
+            <field name="principio_activo">Amoxicilina</field>
+            <field name="laboratorio">Laboratorio Veterinario Argentino</field>
+            <field name="presentacion">inyeccion</field>
+            <field name="concentracion">150 mg/ml</field>
+            <field name="registro_senasa">SENASA-23456-78901</field>
+            <field name="tipo">antibiotico</field>
+            <field name="requiere_receta" eval="True"/>
+        </record>
+    </data>
+</odoo>
