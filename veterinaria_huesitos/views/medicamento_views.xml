@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vista formulario medicamento -->
+    <record id="view_medicamento_form" model="ir.ui.view">
+        <field name="name">veterinaria_huesitos.medicamento.form</field>
+        <field name="model">veterinaria_huesitos.medicamento</field>
+        <field name="arch" type="xml">
+            <form string="Medicamento">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Nombre comercial"/>
+                        </h1>
+                    </div>
+                    
+                    <group>
+                        <group>
+                            <field name="principio_activo" required="1"/>
+                            <field name="laboratorio"/>
+                            <field name="presentacion" required="1"/>
+                            <field name="concentracion"/>
+                        </group>
+                        <group>
+                            <field name="registro_senasa" required="1"/>
+                            <field name="tipo" required="1"/>
+                            <field name="requiere_receta"/>
+                            <field name="stock_disponible" invisible="1"/>
+                        </group>
+                    </group>
+                    
+                    <group string="Uso">
+                        <field name="indicaciones" placeholder="Indicaciones de uso..."/>
+                    </group>
+                    
+                    <field name="active" invisible="1"/>
+                </sheet>
+                
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vista lista medicamento -->
+    <record id="view_medicamento_tree" model="ir.ui.view">
+        <field name="name">veterinaria_huesitos.medicamento.tree</field>
+        <field name="model">veterinaria_huesitos.medicamento</field>
+        <field name="arch" type="xml">
+            <tree decoration-danger="requiere_receta==True">
+                <field name="name"/>
+                <field name="principio_activo"/>
+                <field name="tipo"/>
+                <field name="registro_senasa"/>
+                <field name="requiere_receta" widget="boolean"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Vista búsqueda medicamento -->
+    <record id="view_medicamento_search" model="ir.ui.view">
+        <field name="name">veterinaria_huesitos.medicamento.search</field>
+        <field name="model">veterinaria_huesitos.medicamento</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Nombre"/>
+                <field name="principio_activo"/>
+                <field name="registro_senasa" string="Registro SENASA"/>
+                <filter name="antibioticos" string="Antibióticos" domain="[('tipo','=','antibiotico')]"/>
+                <filter name="antiparasitarios" string="Antiparasitarios" domain="[('tipo','=','antiparasitario')]"/>
+                <filter name="vacunas" string="Vacunas" domain="[('tipo','=','vacuna')]"/>
+                <filter name="receta" string="Requiere Receta" domain="[('requiere_receta','=',True)]"/>
+                <separator/>
+                <group expand="0" string="Agrupar por...">
+                    <filter name="group_tipo" string="Tipo" context="{'group_by':'tipo'}"/>
+                    <filter name="group_receta" string="Receta" context="{'group_by':'requiere_receta'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Acción ventana medicamento -->
+    <record id="action_medicamento" model="ir.actions.act_window">
+        <field name="name">Medicamentos</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">veterinaria_huesitos.medicamento</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_medicamento_search"/>
+    </record>
+</odoo>
