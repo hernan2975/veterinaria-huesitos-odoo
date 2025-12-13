@@ -1,96 +1,206 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- Plantilla de ficha clínica SENASA -->
     <template id="report_ficha_clinica_senasa">
-        <t t-call="web.basic_layout">
-            <div class="page">
-                <div class="row">
-                    <div class="col-3">
-                        <img t-att-src="'/logo.png'" style="max-height: 80px;"/>
-                    </div>
-                    <div class="col-9 text-right">
-                        <h2>Veterinaria Huesitos</h2>
-                        <p>Guatrache, La Pampa<br/>
-                        Tel: +54 2954 123456<br/>
-                        huesitos@veterinaria.com.ar</p>
-                    </div>
+        <t t-call="veterinaria_huesitos.veterinaria_huesitos_report_layout">
+            <div class="veterinaria-header text-center">
+                <h3>FICHA CLÍNICA SENASA</h3>
+                <p class="mb-0">Resolución SENASA 332/2022 - Disposición DNG 05/2023 La Pampa</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-7">
+                    <h4>Datos del Paciente</h4>
+                    <table class="table table-borderless">
+                        <tr>
+                            <td width="30%"><strong>Nombre:</strong></td>
+                            <td><span t-field="doc.paciente_id.name"/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Especie:</strong></td>
+                            <td>
+                                <t t-if="doc.paciente_id.especie == 'canino'">Canino</t>
+                                <t t-if="doc.paciente_id.especie == 'felino'">Felino</t>
+                                <t t-if="doc.paciente_id.especie == 'equino'">Equino</t>
+                                <t t-if="doc.paciente_id.especie == 'ovino'">Ovino</t>
+                                <t t-if="doc.paciente_id.especie == 'caprino'">Caprino</t>
+                                <t t-if="doc.paciente_id.especie == 'porcino'">Porcino</t>
+                                <t t-if="doc.paciente_id.especie == 'bovino'">Bovino</t>
+                                <t t-if="doc.paciente_id.especie == 'aves'">Aves</t>
+                                <t t-if="doc.paciente_id.especie == 'otros'">Otros</t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Raza:</strong></td>
+                            <td><span t-field="doc.paciente_id.raza"/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sexo:</strong></td>
+                            <td>
+                                <t t-if="doc.paciente_id.sexo == 'macho'">Macho</t>
+                                <t t-if="doc.paciente_id.sexo == 'hembra'">Hembra</t>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><strong>Edad:</strong></td>
+                            <td><span t-field="doc.paciente_id.edad"/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Peso:</strong></td>
+                            <td><span t-field="doc.paciente_id.peso_kg"/> kg</td>
+                        </tr>
+                        <tr>
+                            <td><strong>RNAC:</strong></td>
+                            <td><span t-field="doc.paciente_id.senasa_id"/></td>
+                        </tr>
+                    </table>
                 </div>
                 
-                <hr/>
-                
-                <div class="row">
-                    <div class="col-6">
-                        <h3>FICHA CLÍNICA SENASA</h3>
-                        <p><strong>Código:</strong> <span t-field="doc.name"/></p>
-                        <p><strong>Fecha:</strong> <span t-field="doc.fecha_atencion" t-options='{"widget": "datetime"}'/></p>
-                    </div>
-                    <div class="col-6 text-right">
-                        <barcode t-field="doc.name" 
-                                 t-options='{"width": 200, "height": 50, "human_readable": true}'/>
-                    </div>
+                <div class="col-5">
+                    <h4>Datos del Dueño</h4>
+                    <table class="table table-borderless">
+                        <tr>
+                            <td width="30%"><strong>Nombre:</strong></td>
+                            <td><span t-field="doc.cliente_id.name"/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Teléfono:</strong></td>
+                            <td><span t-field="doc.cliente_id.telefono"/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dirección:</strong></td>
+                            <td><span t-field="doc.cliente_id.direccion"/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Localidad:</strong></td>
+                            <td><span t-field="doc.cliente_id.localidad"/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Provincia:</strong></td>
+                            <td><span t-field="doc.cliente_id.provincia"/></td>
+                        </tr>
+                    </table>
                 </div>
-                
-                <div class="row mt-3">
-                    <div class="col-6">
-                        <h4>Datos del Paciente</h4>
-                        <p><strong>Nombre:</strong> <span t-field="doc.paciente_id.name"/></p>
-                        <p><strong>Especie:</strong> <span t-field="doc.paciente_id.especie"/></p>
-                        <p><strong>Raza:</strong> <span t-field="doc.paciente_id.raza"/></p>
-                        <p><strong>Sexo:</strong> <span t-field="doc.paciente_id.sexo"/></p>
-                        <p><strong>Edad:</strong> <span t-field="doc.paciente_id.edad"/></p>
-                        <p><strong>RNAC:</strong> <span t-field="doc.paciente_id.senasa_id"/></p>
-                    </div>
-                    <div class="col-6">
-                        <h4>Datos del Dueño</h4>
-                        <p><strong>Nombre:</strong> <span t-field="doc.cliente_id.name"/></p>
-                        <p><strong>Teléfono:</strong> <span t-field="doc.cliente_id.telefono"/></p>
-                        <p><strong>Dirección:</strong> <span t-field="doc.cliente_id.direccion"/></p>
-                        <p><strong>Localidad:</strong> <span t-field="doc.cliente_id.localidad"/></p>
-                    </div>
+            </div>
+            
+            <div class="row mt-3">
+                <div class="col-12">
+                    <h4>Consulta</h4>
+                    <table class="table table-borderless">
+                        <tr>
+                            <td width="15%"><strong>Código:</strong></td>
+                            <td width="35%"><span t-field="doc.name"/></td>
+                            <td width="15%"><strong>Fecha:</strong></td>
+                            <td width="35%"><span t-field="doc.fecha_atencion" t-options='{"widget": "datetime"}'/></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Veterinario:</strong></td>
+                            <td><span t-field="doc.veterinario_id.name"/></td>
+                            <td><strong>Matrícula:</strong></td>
+                            <td><span t-field="doc.matricula_veterinario"/></td>
+                        </tr>
+                    </table>
                 </div>
-                
-                <div class="mt-3">
+            </div>
+            
+            <div class="row mt-3">
+                <div class="col-12">
                     <h4>Motivo de Consulta</h4>
-                    <p><span t-field="doc.motivo_consulta"/></p>
-                    
+                    <p class="border p-2"><span t-field="doc.motivo_consulta"/></p>
+                </div>
+            </div>
+            
+            <div class="row mt-3">
+                <div class="col-12">
                     <h4>Diagnóstico</h4>
-                    <p><span t-field="doc.diagnostico"/></p>
-                    
-                    <h4>Medicamentos Utilizados</h4>
+                    <p class="border p-2"><span t-field="doc.diagnostico"/></p>
+                </div>
+            </div>
+            
+            <div class="row mt-3">
+                <div class="col-12">
+                    <h4>Tratamiento</h4>
                     <t t-if="doc.medicamentos_ids">
-                        <ul>
-                            <t t-foreach="doc.medicamentos_ids" t-as="med">
-                                <li><span t-field="med.name"/> - <span t-field="med.principio_activo"/></li>
-                            </t>
-                        </ul>
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Medicamento</th>
+                                    <th>Principio Activo</th>
+                                    <th>Registro SENASA</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="doc.medicamentos_ids" t-as="med">
+                                    <tr>
+                                        <td><span t-field="med.name"/></td>
+                                        <td><span t-field="med.principio_activo"/></td>
+                                        <td><span t-field="med.registro_senasa"/></td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
                     </t>
+                    
                     <t t-if="doc.dosis_medicamentos">
-                        <p><strong>Dosis:</strong> <span t-field="doc.dosis_medicamentos"/></p>
+                        <h5>Dosis y Administración</h5>
+                        <p class="border p-2"><span t-field="doc.dosis_medicamentos"/></p>
                     </t>
                 </div>
-                
-                <div class="mt-3">
-                    <div class="row">
-                        <div class="col-4">
-                            <p><strong>Matrícula Veterinario:</strong> <span t-field="doc.matricula_veterinario"/></p>
-                        </div>
-                        <div class="col-4 text-center">
-                            <p>--------------------------</p>
-                            <p>Firma Veterinario</p>
-                        </div>
-                        <div class="col-4 text-center">
-                            <p>--------------------------</p>
-                            <p>Firma Dueño</p>
-                        </div>
+            </div>
+            
+            <div class="row mt-3">
+                <div class="col-6">
+                    <h4>Pronóstico</h4>
+                    <p>
+                        <t t-if="doc.pronostico == 'bueno'">Bueno</t>
+                        <t t-if="doc.pronostico == 'reservado'">Reservado</t>
+                        <t t-if="doc.pronostico == 'dudoso'">Dudoso</t>
+                        <t t-if="doc.pronostico == 'malo'">Malo</t>
+                    </p>
+                </div>
+                <div class="col-6">
+                    <h4>Seguimiento</h4>
+                    <p>
+                        <t t-if="doc.requiere_seguimiento">
+                            <strong>Requiere seguimiento:</strong> Sí<br/>
+                            <strong>Próxima consulta:</strong> <span t-field="doc.proxima_consulta" t-options='{"widget": "datetime"}'/>
+                        </t>
+                        <t t-else="">No requiere seguimiento</t>
+                    </p>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-4 text-center">
+                    <div class="signature-line">
+                        Firma Veterinario
                     </div>
                 </div>
-                
-                <div class="mt-4 text-center">
-                    <p><small>Esta ficha cumple con los requisitos de la Resolución SENASA 332/2022</small></p>
+                <div class="col-4 text-center">
+                    <div class="signature-line">
+                        Sello Profesional
+                    </div>
                 </div>
+                <div class="col-4 text-center">
+                    <div class="signature-line">
+                        Firma del Dueño
+                    </div>
+                </div>
+            </div>
+            
+            <div class="senasa-barcode text-center">
+                <barcode t-field="doc.name" 
+                         t-options='{"width": 200, "height": 50, "human_readable": true}'/>
+            </div>
+            
+            <div class="veterinaria-footer text-center">
+                <p>Esta ficha cumple con los requisitos de la Resolución SENASA 332/2022 y la Disposición DNG 05/2023 de La Pampa.</p>
+                <p>Código de verificación: <span t-field="doc.name"/></p>
             </div>
         </t>
     </template>
 
+    <!-- Acción de reporte -->
     <record id="action_report_ficha_clinica" model="ir.actions.report">
         <field name="name">Ficha Clínica SENASA</field>
         <field name="model">veterinaria_huesitos.historial_clinico</field>
@@ -98,5 +208,7 @@
         <field name="report_name">veterinaria_huesitos.report_ficha_clinica_senasa</field>
         <field name="report_file">veterinaria_huesitos/report_ficha_clinica_senasa</field>
         <field name="print_report_name">"Ficha_SENASA_%(object.name)s"</field>
+        <field name="binding_model_id" ref="model_veterinaria_huesitos_historial_clinico"/>
+        <field name="binding_type">report</field>
     </record>
 </odoo>
