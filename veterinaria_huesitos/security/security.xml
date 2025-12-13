@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Grupos de seguridad -->
+    <record id="group_veterinario" model="res.groups">
+        <field name="name">Veterinario</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+        <field name="users" eval="[(4, ref('base.user_admin'))]"/>
+    </record>
+
+    <record id="group_auxiliar" model="res.groups">
+        <field name="name">Auxiliar</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+
+    <!-- Reglas de acceso -->
+    <record id="rule_paciente_veterinario" model="ir.rule">
+        <field name="name">Pacientes: Veterinario</field>
+        <field name="model_id" ref="model_veterinaria_huesitos_paciente"/>
+        <field name="groups" eval="[(4, ref('group_veterinario'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="rule_paciente_auxiliar" model="ir.rule">
+        <field name="name">Pacientes: Auxiliar</field>
+        <field name="model_id" ref="model_veterinaria_huesitos_paciente"/>
+        <field name="groups" eval="[(4, ref('group_auxiliar'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="rule_historial_veterinario" model="ir.rule">
+        <field name="name">Historial: Veterinario</field>
+        <field name="model_id" ref="model_veterinaria_huesitos_historial_clinico"/>
+        <field name="groups" eval="[(4, ref('group_veterinario'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="rule_historial_auxiliar" model="ir.rule">
+        <field name="name">Historial: Auxiliar</field>
+        <field name="model_id" ref="model_veterinaria_huesitos_historial_clinico"/>
+        <field name="groups" eval="[(4, ref('group_auxiliar'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <!-- Reglas para medicamentos (solo veterinario puede crear/eliminar) -->
+    <record id="rule_medicamento_veterinario" model="ir.rule">
+        <field name="name">Medicamentos: Veterinario</field>
+        <field name="model_id" ref="model_veterinaria_huesitos_medicamento"/>
+        <field name="groups" eval="[(4, ref('group_veterinario'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="rule_medicamento_auxiliar" model="ir.rule">
+        <field name="name">Medicamentos: Auxiliar</field>
+        <field name="model_id" ref="model_veterinaria_huesitos_medicamento"/>
+        <field name="groups" eval="[(4, ref('group_auxiliar'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+</odoo>
