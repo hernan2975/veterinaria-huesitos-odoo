@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Heredar vista de transferencias de stock -->
+    <record id="view_picking_form_inherit_veterinaria" model="ir.ui.view">
+        <field name="name">stock.picking.form.inherit.veterinaria</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <!-- Agregar campos veterinarios en la cabecera -->
+            <xpath expr="//field[@name='origin']" position="after">
+                <field name="es_medicamento" invisible="1"/>
+                <field name="registro_senasa" 
+                       attrs="{'invisible': [('es_medicamento','=',False)]}"
+                       readonly="1"/>
+                <field name="requiere_receta" 
+                       attrs="{'invisible': [('es_medicamento','=',False)]}"
+                       readonly="1"/>
+                <field name="fecha_vencimiento" 
+                       attrs="{'invisible': [('es_medicamento','=',False)]}"
+                       placeholder="Fecha de vencimiento del lote"/>
+            </xpath>
+            
+            <!-- Agregar advertencia para medicamentos con receta -->
+            <xpath expr="//header" position="inside">
+                <field name="requiere_receta" invisible="1"/>
+                <div class="alert alert-warning" 
+                     role="alert" 
+                     attrs="{'invisible': [('requiere_receta','=',False)]}">
+                    <strong>⚠️ Medicamento con receta obligatoria</strong><br/>
+                    Debe especificar una ficha clínica SENASA en el campo 'Referencia' (ej: HUES-LP-20250615-001)
+                </div>
+            </xpath>
+            
+            <!-- Agregar columna de vencimiento en líneas -->
+            <xpath expr="//field[@name='move_ids_without_package']/tree/field[@name='product_id']" position="after">
+                <field name="es_medicamento" invisible="1"/>
+                <field name="fecha_vencimiento" 
+                       attrs="{'invisible': [('parent.es_medicamento','=',False)]}"
+                       optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Vista de productos para medicamentos -->
+    <record id="view_product_template_form_inherit_veterinaria" model="ir.ui.view">
+        <field name="name">product.template.form.inherit.veterinaria</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='inventory']" position="after">
+                <page string="Medicamento Veterinario" 
+                      name="veterinaria" 
+                      attrs="{'invisible': [('categ_id','!=',ref('veterinaria_huesitos.product_category_medicamentos'))]}">
+                    <group>
+                        <group>
+                            <field name="default_code" 
+                                   placeholder="Registro SENASA (ej: SENASA-12345-67890)"/>
+                            <field name="list_price" string="Precio por Unidad"/>
+                        </group>
+                        <group>
+                            <field name="standard_price" string="Costo"/>
+                            <field name="barcode" placeholder="Código de barras"/>
+                        </group>
+                    </group>
+                    
+                    <group string="Características">
+                        <field name="description" 
+                               placeholder="Indicaciones de uso, dosis, vía de administración..."/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Acción para medicamentos -->
+    <record id="action_product_medicamentos" model="ir.actions.act_window">
+        <field name="name">Medicamentos</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('categ_id','=',ref('veterinaria_huesitos.product_category_medicamentos'))]</field>
+        <field name="context">{'default_categ_id': ref('veterinaria_huesitos.product_category_medicamentos'), 'default_type': 'product'}</field>
+    </record>
+
+    <!-- Menú para stock de medicamentos -->
+    <menuitem id="menu_stock_medicamentos"
+              name="Stock Medicamentos"
+              parent="veterinaria_huesitos.menu_medicamentos"
+              action="action_product_medicamentos"
+              sequence="20"/>
+</odoo>
