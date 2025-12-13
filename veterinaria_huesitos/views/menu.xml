@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Menú principal Veterinaria -->
+    <menuitem id="menu_veterinaria_root"
+              name="Veterinaria"
+              web_icon="veterinaria_huesitos,static/description/icon.png"
+              sequence="10"/>
+
+    <!-- Menú Pacientes -->
+    <menuitem id="menu_pacientes"
+              name="Pacientes"
+              parent="menu_veterinaria_root"
+              sequence="10"/>
+
+    <menuitem id="menu_pacientes_list"
+              name="Todos los Pacientes"
+              parent="menu_pacientes"
+              action="action_paciente"
+              sequence="10"/>
+
+    <!-- Menú Clientes -->
+    <menuitem id="menu_clientes"
+              name="Clientes"
+              parent="menu_veterinaria_root"
+              sequence="20"/>
+
+    <menuitem id="menu_clientes_list"
+              name="Todos los Clientes"
+              parent="menu_clientes"
+              action="action_cliente"
+              sequence="10"/>
+
+    <!-- Menú Historial Clínico -->
+    <menuitem id="menu_historial"
+              name="Historial Clínico"
+              parent="menu_veterinaria_root"
+              sequence="30"/>
+
+    <menuitem id="menu_historial_list"
+              name="Todas las Fichas"
+              parent="menu_historial"
+              action="action_historial_clinico"
+              sequence="10"/>
+
+    <!-- Menú Medicamentos -->
+    <menuitem id="menu_medicamentos"
+              name="Medicamentos"
+              parent="menu_veterinaria_root"
+              sequence="40"/>
+
+    <menuitem id="menu_medicamentos_list"
+              name="Inventario"
+              parent="menu_medicamentos"
+              action="action_medicamento"
+              sequence="10"/>
+
+    <!-- Menú Configuración (oculto para usuarios normales) -->
+    <menuitem id="menu_configuracion"
+              name="Configuración"
+              parent="menu_veterinaria_root"
+              groups="veterinaria_huesitos.group_veterinario"
+              sequence="100"/>
+</odoo>
